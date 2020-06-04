@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import "./index.css";
 // import Sandbox from "./Sandbox";
 // import Link from "next/link";
+import Sandbox from "./appl/Sandbox";
 import NavBar from "./NavBar";
 
 class Index extends Component {
@@ -18,5 +19,3 @@ class Index extends Component {
     );
   }
 }
-
-export default Index;
