@@ -1,7 +1,7 @@
 import "./styles.scss";
 import React, { useEffect, useState, useRef } from "react";
 import ReactDOM from "react-dom";
-import { createEditor } from "../editor";
+import { createEditor } from "../../utils/editor";
 import debounce from "debounce";
 import Link from "next/link";
 import Router from "next/router";
@@ -66,7 +66,10 @@ export default function SandBox() {
 
       <div className="split-view">
         <div className="code-editor">
-          <textarea value={codeInput} onChange={onCodeChange} />
+          <textarea
+            value={codeInput}
+            onChange={(e) => setCodeInput(e.target.value)}
+          />
         </div>
         <div className="preview" ref={el} />
       </div>
