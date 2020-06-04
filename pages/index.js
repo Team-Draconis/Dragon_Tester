@@ -5,15 +5,17 @@ import React, { Component } from "react";
 import Sandbox from "./appl/Sandbox";
 import NavBar from "./NavBar";
 
-export default function Index() {
-  return (
-    <div>
-      <NavBar />
-      <h3>Login page</h3>
-      {/* <Link href=""></Link> */}
-      <a href="/appl/splash" className="card">
-        <h3>Go to the splash</h3>
-      </a>
-    </div>
-  );
+class Index extends Component {
+  state = {};
+  render() {
+    return (
+      <div>
+        <NavBar />
+        <h3>Login page</h3>
+        <a href="/appl/splash" className="card">
+          <h3>Go to the splash</h3>
+        </a>
+      </div>
+    );
+  }
 }
