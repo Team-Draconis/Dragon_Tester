@@ -26,6 +26,7 @@ export default function SandBox() {
     editor = createEditor(el.current);
     editor.run(codeInput);
     run(codeInput);
+    //runTest(codeInput)
   };
 
   const run = () => {
