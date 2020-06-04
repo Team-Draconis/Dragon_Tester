@@ -1,14 +1,13 @@
 import "./styles.scss";
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ReactDOM from "react-dom";
-import { createEditor } from "../editor";
+import { createEditor } from "../../utils/editor";
 import debounce from "debounce";
+import Link from "next/link";
 
 // default code
 const code = `import x from 'x';
-
 // edit this example
-
 function Greet() {
   return <span>Hello World!</span>
 }
@@ -16,46 +15,44 @@ function Greet() {
 <Greet />
 `;
 
-class SandBox extends React.Component {
-  state = {
-    code,
+export default function SandBox() {
+  const [codeInput, setCodeInput] = useState(code);
+
+  let editor = null;
+
+  const el = useRef(null);
+
+  const runCode = () => {
+    editor = createEditor(el.current);
+    editor.run(codeInput);
+    run(codeInput);
   };
 
-  editor = null;
-
-  el = null;
-
-  componentDidMount() {
-    this.editor = createEditor(this.el);
-    this.editor.run(code);
-  }
-
-  onCodeChange = ({ target: { value } }) => {
-    this.setState({ code: value });
-    this.run(value);
+  const onCodeChange = ({ target: { value } }) => {
+    setCodeInput(value);
   };
 
-  run = debounce(() => {
-    const { code } = this.state;
-    this.editor.run(code);
-  }, 500);
+  const run = () => {
+    editor.run(codeInput);
+  };
 
-  submitCode = ({ target: { value } }) => {};
+  const submitCode = ({ target: { value } }) => {};
 
-  render() {
-    const { code } = this.state;
-    return (
-      <div className="app">
-        <div className="split-view">
-          <div className="code-editor">
-            <textarea value={code} onChange={this.onCodeChange} />
-          </div>
-          <div className="preview" ref={(el) => (this.el = el)} />
+  return (
+    <div className="app">
+      <div className="split-view">
+        <div className="code-editor">
+          <textarea value={codeInput} onChange={onCodeChange} />
         </div>
-        <button onClick={this.submitCode}>Submit</button>
+        <div className="preview" ref={el} />
       </div>
-    );
-  }
+      <button onClick={runCode}>Run</button>
+      <button onClick={submitCode} data-testid="toggle">
+        Submit
+      </button>
+      <Link href="/">
+        <button>Go Back To Home</button>
+      </Link>
+    </div>
+  );
 }
-
-export default SandBox;
