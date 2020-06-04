@@ -28,10 +28,6 @@ export default function SandBox() {
     run(codeInput);
   };
 
-  const onCodeChange = ({ target: { value } }) => {
-    setCodeInput(value);
-  };
-
   const run = () => {
     editor.run(codeInput);
   };
@@ -42,14 +38,15 @@ export default function SandBox() {
     <div className="app">
       <div className="split-view">
         <div className="code-editor">
-          <textarea value={codeInput} onChange={onCodeChange} />
+          <textarea
+            value={codeInput}
+            onChange={(e) => setCodeInput(e.target.value)}
+          />
         </div>
         <div className="preview" ref={el} />
       </div>
       <button onClick={runCode}>Run</button>
-      <button onClick={submitCode} data-testid="toggle">
-        Submit
-      </button>
+      <button onClick={submitCode}>Submit</button>
       <Link href="/">
         <button>Go Back To Home</button>
       </Link>
