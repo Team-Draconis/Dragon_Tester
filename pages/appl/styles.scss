@@ -1,0 +1,43 @@
+.app {
+  * {
+    box-sizing: border-box;
+    -webkit-fontsmoothing: antialiased;
+    font-family: "Monaco", "Consolas", "sans";
+  }
+
+  .split-view {
+    display: flex;
+    width: 100%;
+    min-width: 600px;
+  }
+
+  div.preview {
+    width: 50%;
+    padding: 1em;
+    &:last-child {
+      border-top: solid 1px #ccc;
+      border-right: solid 1px #ccc;
+      border-bottom: solid 1px #ccc;
+    }
+    &:empty:before {
+      content: "Nothing to render";
+      color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .code-editor {
+    width: 50%;
+    > textarea {
+      padding: 1em;
+      width: 100%;
+      height: 100%;
+      border: solid 1px #000;
+      min-height: 30em;
+      outline: none;
+      font-family: "Monaco";
+      font-size: 14px;
+      background: #333;
+      color: #74b9ff;
+    }
+  }
+}
