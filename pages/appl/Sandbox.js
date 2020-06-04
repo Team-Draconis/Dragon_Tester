@@ -76,7 +76,7 @@ export default function SandBox() {
       <button onClick={runCode}>Run</button>
 
       <button onClick={handleSubmit}>Submit</button>
-      <Link href="/">Go Back To Home</Link>
+      <Link href="/appl/report">Review Results</Link>
     </div>
   );
 }
