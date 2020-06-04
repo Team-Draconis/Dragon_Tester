@@ -1,13 +1,20 @@
 const mongoose = require("mongoose");
 
-const CodingTestSchema = new mongoose.Schema({
+const CodeTestSchema = new mongoose.Schema({
   candidate_email: {
     type: String,
+    required: [true, "Email is required"],
+    unique: true,
+    trim: true,
   },
-  code: {
+  city: {
     type: String,
+  },
+  codes: {
+    type: String,
+    required: true,
   },
 });
 
 module.exports =
-  mongoose.models.CodingTest || mongoose.model("CodingTest", CodingTestSchema);
+  mongoose.models.CodeTest || mongoose.model("CodeTest", CodeTestSchema);

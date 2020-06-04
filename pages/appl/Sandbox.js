@@ -1,61 +1,79 @@
 import "./styles.scss";
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ReactDOM from "react-dom";
 import { createEditor } from "../editor";
 import debounce from "debounce";
-
+import Link from "next/link";
+import Router from "next/router";
 // default code
 const code = `import x from 'x';
-
 // edit this example
-
 function Greet() {
   return <span>Hello World!</span>
 }
-
 <Greet />
 `;
+export default function SandBox() {
+  const [codeInput, setCodeInput] = useState(code);
+  const [email, setEmail] = useState("email");
+  const [city, setCity] = useState("city");
 
-class SandBox extends React.Component {
-  state = {
-    code,
+  let editor = null;
+  const el = useRef(null);
+  const runCode = () => {
+    editor = createEditor(el.current);
+    editor.run(codeInput);
+    run(codeInput);
+  };
+  const onCodeChange = ({ target: { value } }) => {
+    setCodeInput(value);
   };
 
-  editor = null;
-
-  el = null;
-
-  componentDidMount() {
-    this.editor = createEditor(this.el);
-    this.editor.run(code);
-  }
-
-  onCodeChange = ({ target: { value } }) => {
-    this.setState({ code: value });
-    this.run(value);
+  const onEmailChange = ({ target: { value } }) => {
+    setEmail(value);
   };
 
-  run = debounce(() => {
-    const { code } = this.state;
-    this.editor.run(code);
-  }, 500);
+  const onCityChange = ({ target: { value } }) => {
+    setCity(value);
+  };
 
-  submitCode = ({ target: { value } }) => {};
+  const run = () => {
+    editor.run(codeInput);
+  };
 
-  render() {
-    const { code } = this.state;
-    return (
-      <div className="app">
-        <div className="split-view">
-          <div className="code-editor">
-            <textarea value={code} onChange={this.onCodeChange} />
-          </div>
-          <div className="preview" ref={(el) => (this.el = el)} />
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(e);
+
+    fetch("/api/codetest", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        candidate_email: email,
+        codes: codeInput,
+        city: city,
+      }),
+    }).then((res) => {
+      // Do a fast client-side transition to the already prefetched dashboard page
+      if (res.ok) Router.push("/api/codetest");
+    });
+  };
+
+  return (
+    <div className="app">
+      <input type="text" onChange={onEmailChange} value={email} />
+      <input type="text" onChange={onCityChange} value={city} />
+
+      <div className="split-view">
+        <div className="code-editor">
+          <textarea value={codeInput} onChange={onCodeChange} />
         </div>
-        <button onClick={this.submitCode}>Submit</button>
+        <div className="preview" ref={el} />
       </div>
-    );
-  }
-}
+      <button onClick={runCode}>Run</button>
 
-export default SandBox;
+      <button onClick={handleSubmit}>Submit</button>
+      <Link href="/">Go Back To Home</Link>
+    </div>
+  );
+}
