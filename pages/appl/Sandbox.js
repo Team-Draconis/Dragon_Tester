@@ -1,7 +1,7 @@
 import "./styles.scss";
 import React from "react";
 import ReactDOM from "react-dom";
-import { createEditor } from "../editor";
+import { createEditor } from "../../utils/editor";
 import debounce from "debounce";
 
 // default code
