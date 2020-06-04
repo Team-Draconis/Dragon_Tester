@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "BuildStart":"next build && next start"
   },
   "dependencies": {
     "@babel/standalone": "^7.10.2",
