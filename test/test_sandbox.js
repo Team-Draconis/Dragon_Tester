@@ -1,4 +1,5 @@
 var assert = require("assert");
+var sandbox = require("../pages/appl/Sandbox");
 
 describe("Array", function () {
   describe("#indexOf()", function () {

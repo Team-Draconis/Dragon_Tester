@@ -5,6 +5,7 @@ import { createEditor } from "../../utils/editor";
 import debounce from "debounce";
 import Link from "next/link";
 import Router from "next/router";
+
 // default code
 const code = `import x from 'x';
 // edit this example
@@ -63,6 +64,24 @@ export default function SandBox() {
       });
   };
 
+  const Test = () => {
+    const expect = `import x from 'x';\n// edit this example\nfunction Greet() {\n  return <span>Hello World!</span>\n}\n<Greet />`;
+    if (codeInput.includes(expect)) {
+      return "Pass!";
+    }
+    console.log(codeInput);
+    console.log(expect);
+    return "Failllllllll";
+  };
+
+  const result = "test result";
+
+  const runTest = async () => {
+    await fetch("/api/testRunner").then((res) =>
+      res.json().then((res) => console.log(JSON.stringify(res)))
+    );
+  };
+
   return (
     <div className="app">
       <input type="text" onChange={onEmailChange} value={email} />
@@ -80,7 +99,13 @@ export default function SandBox() {
       <button onClick={runCode}>Run</button>
 
       <button onClick={handleSubmit}>Submit</button>
-      <Link href="/">Go Back To Home</Link>
+      <Link href="/">
+        <button>Go Back To Home</button>
+      </Link>
+      <button onClick={runTest}>Test</button>
+      <div className="split-view">
+        <Test />
+      </div>
     </div>
   );
 }

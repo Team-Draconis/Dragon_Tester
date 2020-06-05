@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import ObjPath from "object-path";
 
@@ -73,7 +73,7 @@ export function createEditor(domElement, moduleResolver = () => null) {
 
     // compiles and invokes the wrapper function
     run(code) {
-      this.compile(code)(React, render, require);
+      this.compile(code)(React, render, require, useState);
     },
 
     // just compiles and returns the stringified wrapper function
