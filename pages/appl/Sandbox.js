@@ -1,10 +1,11 @@
-import "./styles.scss";
+import "./styles.module.scss";
 import React, { useEffect, useState, useRef } from "react";
 import ReactDOM from "react-dom";
 import { createEditor } from "../../utils/editor";
 import debounce from "debounce";
 import Link from "next/link";
 import Router from "next/router";
+import TestResult from "../test/[id]";
 
 // default code
 const code = `import x from 'x';
@@ -18,6 +19,7 @@ export default function SandBox() {
   const [codeInput, setCodeInput] = useState(code);
   const [email, setEmail] = useState("email");
   const [city, setCity] = useState("city");
+  const [testResult, setTestResult] = useState(null);
 
   let editor = null;
   const el = useRef(null);
@@ -67,20 +69,39 @@ export default function SandBox() {
   const Test = () => {
     const expect = `import x from 'x';\n// edit this example\nfunction Greet() {\n  return <span>Hello World!</span>\n}\n<Greet />`;
     if (codeInput.includes(expect)) {
-      return "Pass!";
+      return testResult;
     }
     console.log(codeInput);
     console.log(expect);
-    return "Failllllllll";
+    return testResult;
   };
 
   const result = "test result";
 
-  const runTest = async () => {
-    await fetch("/api/testRunner").then((res) =>
-      res.json().then((res) => console.log(JSON.stringify(res)))
-    );
+  let output;
+  const runTest = async (res, req) => {
+    output = await fetch("/api/testRunner", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    }).then((res) => res.json().then((res) => setTestResult(res.data)));
   };
+
+  //   fetch("/api/testRunner", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //
+  //     }),
+  //   })
+  //     .then((res) => {
+  //       // Do a fast client-side transition to the already prefetched dashboard page
+  //       if (res.ok) Router.push("/appl/end");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error); // add more detail error later
+  //     });
+  // };
 
   return (
     <div className="app">
@@ -103,9 +124,7 @@ export default function SandBox() {
         <button>Go Back To Home</button>
       </Link>
       <button onClick={runTest}>Test</button>
-      <div className="split-view">
-        <Test />
-      </div>
+      <div>{testResult}</div>
     </div>
   );
 }

@@ -7,7 +7,6 @@ import Router from "next/router";
 import "../../appl/styles.scss";
 
 const TestResult = ({ testResult }) => {
-  console.log(("####", testResult));
   let editor = null;
   const el = useRef(null);
   const runCode = () => {
