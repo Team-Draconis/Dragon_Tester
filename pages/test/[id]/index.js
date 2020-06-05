@@ -38,7 +38,7 @@ const TestResult = ({ testResult }) => {
 };
 
 TestResult.getInitialProps = async ({ query: { id } }) => {
-  const res = await fetch(`http://localhost:3000/api/${id}/`);
+  const res = await fetch(`https://dragon-tester.now.sh/api/${id}/`);
   const { data } = await res.json();
   return { testResult: data };
 };
