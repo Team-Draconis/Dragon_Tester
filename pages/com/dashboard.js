@@ -34,7 +34,7 @@ const Dashboard = ({ testResults }) => {
 };
 
 Dashboard.getInitialProps = async () => {
-  const res = await fetch("/api/codetest");
+  const res = await fetch("https://dragon-tester.now.sh/api/codetest");
   const { data } = await res.json();
   return { testResults: data };
 };
