@@ -20,7 +20,11 @@
     "/_polyfills": [
       "static/runtime/polyfills.js"
     ],
-    "/appl/Sandbox": [
+    "/appl/end": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/test/[id]": [
       "static/runtime/webpack.js",
       "static/css/styles.chunk.css",
       "static/chunks/styles.js",
