@@ -11,6 +11,7 @@
     "test:unit": "./node_modules/.bin/mocha --require babel-register ./test/test_sandbox.js"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.10.2",
     "@babel/standalone": "^7.10.2",
     "@testing-library/jest-dom": "^5.9.0",
     "@testing-library/react": "^10.0.6",
